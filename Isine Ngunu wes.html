@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="download (1).jpg" type="image/x-icon">
+  <title>My To Do List</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+/* CSS E HTML IKI */
+    body {
+      background-color: #f3f4f6;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .container {
+      margin-top: 5%;
+      max-width: 600px;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    #judul {
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+    }
+
+    #input .form-control {
+      margin-bottom: 1rem;
+    }
+
+    #tombol {
+      background-color: #6366f1;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    #tombol:hover {
+      background-color: #4f46e5;
+    }
+
+    .task-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      background-color: #f9fafb;
+    }
+
+    .task-label {
+      margin-left: 0.5rem;
+    }
+
+    .task-done {
+      text-decoration: line-through black;
+      color: green;
+    }
+
+    .delete-btn {
+      color: #ef4444;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .delete-btn:hover {
+      color: #dc2626;
+    }
+
+    .task-meta {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .hide-btn {
+      background: none;
+      border: none;
+      color: #6b7280;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: none;
+    }
+
+  </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+  <div class="container">
+    <div id="judul" class="d-flex align-items-center justify-content-center mb-4">
+        <!-- Logo Profilmu -->
+  <img src="download (1).jpg" alt="Logo" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 12px;">
+  <h2 class="m-0 fw-bold">To-Do List App School Task</h2>
+</div>
+
+    <!-- Inputan Form sing bakal di isi mbek pengguna -->
+    <div id="input">
+      <input type="text" id="taskInput" class="form-control" placeholder="Masukkan tugasmu di sini..."> <!-- Inputan tugas -->
+      <input type="text" id="subjectInput" class="form-control" placeholder="Jenis pelajaran..."> <!-- Inputan jenis pelajaran -->
+      <input type="date" id="dateInput" class="form-control" placeholder="Tanggal deadline..."> <!-- Inputan tanggal terlambat -->
+      <button id="tombol">Tambah Tugas</button> <!-- Tombol kanggo nambah tugas -->
+    </div>
+
+    <div class="d-flex justify-content-end mb-2"> 
+      <button id="hideDoneTasks" class="hide-btn">Sembunyikan tugas yang selesai</button> <!-- Tombol kanggo nyembunyikan tugas sing wis rampung -->
+    </div>
+
+    <div id="list"></div> <!-- tag daftar, sing bakal di gawe outputan tugas tugas e -->
+  </div>
+  <script>
+    // gawe variabel sing bakal di gunakake
+    let judul = document.getElementById("judul");
+    let tombol = document.getElementById("tombol");
+    let input = document.getElementById("taskInput");
+    let subjectInput = document.getElementById("subjectInput");
+    let dateInput = document.getElementById("dateInput");
+    let list = document.getElementById("list");
+    let hideBtn = document.getElementById("hideDoneTasks");
+
+    let hideDone = false; // digawe ndelikkake tugas sing wis rampung
+ 
+    function checkDoneTasks() {
+      let anyDone = Array.from(document.querySelectorAll("#list input[type='checkbox']") // nggo ngumpulake kabeh checkbox sing ana ing daftar tugas
+    ).some(cb => cb.checked); // ngecek apa ana checkbox sing wis dicek
+      hideBtn.style.display = anyDone ? "inline" : "none"; // nampilake tombol "Sembunyikan tugas yang selesai" yen ana tugas sing wis rampung
+    }
+
+    function TugasBaru() {
+      let taskText = input.value.trim(); // ngilangke spasi kosong ing awal lan akhir teks tugas
+      let subject = subjectInput.value.trim(); // ngilangke spasi kosong ing awal lan akhir teks pelajaran
+      let date = dateInput.value; // njupuk tanggal deadline sing dipilih
+
+      if (taskText === "" || subject === "" || date === "") { // ngecek apa inputan tugas, pelajaran, utawa tanggal kosong
+        alert("Semua inputan harus diisi!"); // nampilake alert yen ana inputan sing kosong
+        return; // metu saka fungsi yen ana inputan sing kosong
+      }
+      
+    // gawe Elemen anyar kanggo bagian List
+      let taskRow = document.createElement("div"); // gawe elemen div anyar kanggo baris tugas
+      taskRow.classList.add("task-row");
+
+      let leftSide = document.createElement("div");// gawe elemen div anyar kanggo sisi kiri baris tugas
+      leftSide.classList.add("d-flex", "flex-column");
+
+      let checkContainer = document.createElement("div");// gawe elemen div anyar kanggo wadah checkbox
+      checkContainer.classList.add("d-flex", "align-items-center");
+
+      let checkbox = document.createElement("input");// gawe elemen input anyar kanggo checkbox
+      checkbox.type = "checkbox";
+      checkbox.classList.add("form-check-input");
+
+      let label = document.createElement("label");// gawe elemen label anyar kanggo teks tugas
+      label.classList.add("task-label", "ms-2");
+      label.innerText = taskText;// isi label karo teks tugas
+
+      checkContainer.append(checkbox, label); // nambahake checkbox lan label menyang wadah checkbox
+
+      let meta = document.createElement("div"); // gawe elemen div anyar kanggo informasi tambahan tugas
+      meta.classList.add("task-meta", "ms-4");
+      
+      let meta2 = document.createTextNode(`Pelajaran: ${subject} | Deadline: ${date}`);// gawe teks informasi tambahan tugas
+      meta.appendChild(meta2);// nambahake teks informasi tambahan menyang elemen div
+
+      checkbox.addEventListener("change", function () {// nambahake event listener kanggo checkbox
+        if (this.checked) { // ngecek apa checkbox wis dicek
+          label.classList.add("task-done");
+          taskRow.style.display = hideDone ? "none" : "flex";
+        } else {
+          label.classList.remove("task-done"); // ngilangke kelas "task-done" yen checkbox ora dicek
+          taskRow.style.display = "flex";
+        }
+        checkDoneTasks();
+      });
+
+      leftSide.append(checkContainer, meta); // nambahake wadah checkbox lan informasi tambahan menyang sisi kiri baris tugas
+
+      let deleteBtn = document.createElement("i");
+      deleteBtn.classList.add("bi", "bi-trash", "delete-btn");
+      deleteBtn.addEventListener("click", function () {
+        list.removeChild(taskRow); // ngilangke baris tugas saka daftar
+        checkDoneTasks();
+      });
+
+      taskRow.append(leftSide, deleteBtn); // nambahake sisi kiri lan tombol hapus menyang baris tugas
+
+      list.insertBefore(taskRow, list.firstChild);
+
+      input.value = "";
+      subjectInput.value = "";
+      dateInput.value = "";
+    }
+
+    tombol.addEventListener("click", TugasBaru);
+
+    input.addEventListener("keyup", function (event) {
+      if (event.key === "Enter") {
+        TugasBaru();
+      }
+    });
+
+    hideBtn.addEventListener("click", function () {
+      hideDone = !hideDone; // toggle nilai hideDone
+      hideBtn.innerText = hideDone ? "Tampilkan tugas yang selesai" : "Sembunyikan tugas yang selesai";
+      document.querySelectorAll(".task-row").forEach(row => {
+        let checkbox = row.querySelector("input[type='checkbox']");
+        if (checkbox.checked) {
+          row.style.display = hideDone ? "none" : "flex";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
