@@ -46,4 +46,4 @@
 ## 🚀 **Instalasi & Penggunaan**
 1. **Clone Repository**
    ```bash
-   git clone https://github.com/Yohnzz/To-Do-List
+   git clone https://github.com/Yohnzz/To-Do-List.git
