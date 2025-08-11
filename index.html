@@ -9,10 +9,17 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <style>
-/* CSS E HTML IKI */
     body {
-      background-color: #f3f4f6;
+      background: linear-gradient(135deg, #6366f1, #3b82f6, #06b6d4);
+      background-size: 300% 300%;
+      animation: gradientBG 8s ease infinite;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .container {
@@ -91,35 +98,30 @@
       cursor: pointer;
       display: none;
     }
-
   </style>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
   <div class="container">
     <div id="judul" class="d-flex align-items-center justify-content-center mb-4">
-        <!-- Logo Profilmu -->
-  <img src="download (1).jpg" alt="Logo" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 12px;">
-  <h2 class="m-0 fw-bold">To-Do List App School Task</h2>
-</div>
+      <img src="download (1).jpg" alt="Logo" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 12px;">
+      <h2 class="m-0 fw-bold">To-Do List App School Task</h2>
+    </div>
 
-    <!-- Inputan Form sing bakal di isi mbek pengguna -->
     <div id="input">
-      <input type="text" id="taskInput" class="form-control" placeholder="Masukkan tugasmu di sini..."> <!-- Inputan tugas -->
-      <input type="text" id="subjectInput" class="form-control" placeholder="Jenis pelajaran..."> <!-- Inputan jenis pelajaran -->
-      <input type="date" id="dateInput" class="form-control" placeholder="Tanggal deadline..."> <!-- Inputan tanggal terlambat -->
-      <button id="tombol">Tambah Tugas</button> <!-- Tombol kanggo nambah tugas -->
+      <input type="text" id="taskInput" class="form-control" placeholder="Masukkan tugasmu di sini...">
+      <input type="text" id="subjectInput" class="form-control" placeholder="Jenis pelajaran...">
+      <input type="date" id="dateInput" class="form-control">
+      <button id="tombol">Tambah Tugas</button>
     </div>
 
     <div class="d-flex justify-content-end mb-2"> 
-      <button id="hideDoneTasks" class="hide-btn">Sembunyikan tugas yang selesai</button> <!-- Tombol kanggo nyembunyikan tugas sing wis rampung -->
+      <button id="hideDoneTasks" class="hide-btn">Sembunyikan tugas yang selesai</button>
     </div>
 
-    <div id="list"></div> <!-- tag daftar, sing bakal di gawe outputan tugas tugas e -->
+    <div id="list"></div>
   </div>
+
   <script>
-    // gawe variabel sing bakal di gunakake
-    let judul = document.getElementById("judul");
     let tombol = document.getElementById("tombol");
     let input = document.getElementById("taskInput");
     let subjectInput = document.getElementById("subjectInput");
@@ -127,72 +129,72 @@
     let list = document.getElementById("list");
     let hideBtn = document.getElementById("hideDoneTasks");
 
-    let hideDone = false; // digawe ndelikkake tugas sing wis rampung
- 
+    let hideDone = false;
+
     function checkDoneTasks() {
-      let anyDone = Array.from(document.querySelectorAll("#list input[type='checkbox']") // nggo ngumpulake kabeh checkbox sing ana ing daftar tugas
-    ).some(cb => cb.checked); // ngecek apa ana checkbox sing wis dicek
-      hideBtn.style.display = anyDone ? "inline" : "none"; // nampilake tombol "Sembunyikan tugas yang selesai" yen ana tugas sing wis rampung
+      let anyDone = Array.from(document.querySelectorAll("#list input[type='checkbox']")).some(cb => cb.checked);
+      hideBtn.style.display = anyDone ? "inline" : "none";
     }
 
     function TugasBaru() {
-      let taskText = input.value.trim(); // ngilangke spasi kosong ing awal lan akhir teks tugas
-      let subject = subjectInput.value.trim(); // ngilangke spasi kosong ing awal lan akhir teks pelajaran
-      let date = dateInput.value; // njupuk tanggal deadline sing dipilih
+      let taskText = input.value.trim();
+      let subject = subjectInput.value.trim();
+      let date = dateInput.value;
 
-      if (taskText === "" || subject === "" || date === "") { // ngecek apa inputan tugas, pelajaran, utawa tanggal kosong
-        alert("Semua inputan harus diisi!"); // nampilake alert yen ana inputan sing kosong
-        return; // metu saka fungsi yen ana inputan sing kosong
+      if (taskText === "" || subject === "" || date === "") {
+        alert("Semua inputan harus diisi!");
+        return;
       }
       
-    // gawe Elemen anyar kanggo bagian List
-      let taskRow = document.createElement("div"); // gawe elemen div anyar kanggo baris tugas
+      let taskRow = document.createElement("div");
       taskRow.classList.add("task-row");
 
-      let leftSide = document.createElement("div");// gawe elemen div anyar kanggo sisi kiri baris tugas
+      let leftSide = document.createElement("div");
       leftSide.classList.add("d-flex", "flex-column");
 
-      let checkContainer = document.createElement("div");// gawe elemen div anyar kanggo wadah checkbox
+      let checkContainer = document.createElement("div");
       checkContainer.classList.add("d-flex", "align-items-center");
 
-      let checkbox = document.createElement("input");// gawe elemen input anyar kanggo checkbox
+      let checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.classList.add("form-check-input");
 
-      let label = document.createElement("label");// gawe elemen label anyar kanggo teks tugas
+      let label = document.createElement("label");
       label.classList.add("task-label", "ms-2");
-      label.innerText = taskText;// isi label karo teks tugas
+      label.innerText = taskText;
 
-      checkContainer.append(checkbox, label); // nambahake checkbox lan label menyang wadah checkbox
+      checkContainer.append(checkbox, label);
 
-      let meta = document.createElement("div"); // gawe elemen div anyar kanggo informasi tambahan tugas
+      let meta = document.createElement("div");
       meta.classList.add("task-meta", "ms-4");
-      
-      let meta2 = document.createTextNode(`Pelajaran: ${subject} | Deadline: ${date}`);// gawe teks informasi tambahan tugas
-      meta.appendChild(meta2);// nambahake teks informasi tambahan menyang elemen div
+      let meta2 = document.createTextNode(`Pelajaran: ${subject} | Deadline: ${date}`);
+      meta.appendChild(meta2);
 
-      checkbox.addEventListener("change", function () {// nambahake event listener kanggo checkbox
-        if (this.checked) { // ngecek apa checkbox wis dicek
+      checkbox.addEventListener("change", function () {
+        if (this.checked) {
           label.classList.add("task-done");
           taskRow.style.display = hideDone ? "none" : "flex";
         } else {
-          label.classList.remove("task-done"); // ngilangke kelas "task-done" yen checkbox ora dicek
+          label.classList.remove("task-done");
           taskRow.style.display = "flex";
         }
         checkDoneTasks();
       });
 
-      leftSide.append(checkContainer, meta); // nambahake wadah checkbox lan informasi tambahan menyang sisi kiri baris tugas
+      leftSide.append(checkContainer, meta);
 
       let deleteBtn = document.createElement("i");
       deleteBtn.classList.add("bi", "bi-trash", "delete-btn");
       deleteBtn.addEventListener("click", function () {
-        list.removeChild(taskRow); // ngilangke baris tugas saka daftar
-        checkDoneTasks();
+        let confirmDelete = confirm("Yakin mau hapus tugas ini? 🗑");
+        if (confirmDelete) {
+          alert("Tugas berhasil dihapus ✅");
+          list.removeChild(taskRow);
+          checkDoneTasks();
+        }
       });
 
-      taskRow.append(leftSide, deleteBtn); // nambahake sisi kiri lan tombol hapus menyang baris tugas
-
+      taskRow.append(leftSide, deleteBtn);
       list.insertBefore(taskRow, list.firstChild);
 
       input.value = "";
@@ -209,7 +211,7 @@
     });
 
     hideBtn.addEventListener("click", function () {
-      hideDone = !hideDone; // toggle nilai hideDone
+      hideDone = !hideDone;
       hideBtn.innerText = hideDone ? "Tampilkan tugas yang selesai" : "Sembunyikan tugas yang selesai";
       document.querySelectorAll(".task-row").forEach(row => {
         let checkbox = row.querySelector("input[type='checkbox']");
@@ -219,6 +221,7 @@
       });
     });
   </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
