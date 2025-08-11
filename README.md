@@ -32,7 +32,7 @@
 
 ## 📸 **Preview**
 ![Preview App](./assets/preview.png)  
-*(Ganti dengan screenshot aplikasi kamu)*
+
 
 ---
 
