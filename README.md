@@ -1,21 +1,49 @@
-# **To-Do List App — School Task**
+# 📚 **To-Do List App — School Task**
 
-**Deskripsi singkat**
-Aplikasi **To-Do List** sederhana buat bantu kamu catet tugas sekolah: isi nama tugas, pilih **mata pelajaran**, dan set **deadline**. UI clean & responsive, cocok buat tugas sekolah atau project portofolio.
+![HTML Badge](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS Badge](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript Badge](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
----
-
-## **✨ Fitur**
-- **Menambahkan tugas** (title, mata pelajaran, tanggal deadline)  
-- **Date picker** untuk pilih tanggal deadline  
-- UI yang **responsive** dan mudah dipakai  
-- Bisa dikembangkan buat **localStorage**, edit, hapus, filter, dll.
+> **Deskripsi Singkat:**  
+> Aplikasi **To-Do List** sederhana buat bantu kamu catet tugas sekolah: isi nama tugas, pilih **mata pelajaran**, dan set **deadline**.  
+> Desain **clean & responsive**, cocok buat tugas sekolah atau project portofolio.
 
 ---
 
-## **📸 Preview**
-Tambahkan screenshot di folder repo dan ganti nama file sesuai:  
-`./assets/preview.png`
+## 📑 **Table of Contents**
+- [✨ Fitur](#-fitur)
+- [📸 Preview](#-preview)
+- [🛠️ Teknologi](#️-teknologi)
+- [🚀 Instalasi & Penggunaan](#-instalasi--penggunaan)
+- [📂 Struktur Folder](#-struktur-folder)
+- [💡 Rencana Pengembangan](#-rencana-pengembangan)
+- [🤝 Kontribusi](#-kontribusi)
+- [📜 Lisensi](#-lisensi)
 
-```markdown
-![Preview App](./assets/preview.png)
+---
+
+## ✨ **Fitur**
+- 📝 **Menambahkan tugas** (judul, mata pelajaran, tanggal deadline)
+- 📅 **Date picker** untuk memilih deadline
+- 📱 **Responsive UI** yang nyaman digunakan di HP maupun PC
+- 🔄 Potensi pengembangan untuk **localStorage**, edit, hapus, filter, dan dark mode
+
+---
+
+## 📸 **Preview**
+![Preview App](./assets/preview.png)  
+*(Ganti dengan screenshot aplikasi kamu)*
+
+---
+
+## 🛠️ **Teknologi**
+- **HTML5** → Struktur halaman
+- **CSS3** → Styling dan layout
+- **JavaScript (Vanilla)** → Logika aplikasi
+
+---
+
+## 🚀 **Instalasi & Penggunaan**
+1. **Clone Repository**
+   ```bash
+   git clone https://github.com/username/repository-name.git
