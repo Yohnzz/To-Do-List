@@ -37,9 +37,9 @@
 ---
 
 ## 🛠️ **Teknologi**
-- **HTML5** → Struktur halaman
-- **CSS3** → Styling dan layout
-- **JavaScript (Vanilla)** → Logika aplikasi
+- **HTML** → Struktur halaman
+- **CSS** → Styling dan layout
+- **JavaScript (DOM)** → Logika aplikasi
 
 ---
 
